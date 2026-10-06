@@ -44,7 +44,7 @@ public class App {
                     System.out.println("Opción 4: Modificar producto.");
                     break;
                 case 5:
-                    System.out.println("Opción 5: Eliminar producto.");
+                    deleteProduct(scanner, products);
                     break;
                 case 6:
                     System.out.println("Opción 6: Listar categorías.");
@@ -154,6 +154,27 @@ public class App {
 
         System.out.println("Producto encontrado:");
         System.out.println(product);
+    }
+
+    public static void deleteProduct(Scanner scanner, ArrayList<Product> products) {
+        System.out.println("\n--- ELIMINAR PRODUCTO ---");
+
+        if (products.isEmpty()) {
+            System.out.println("No hay productos cargados.");
+            return;
+        }
+
+        int id = readInteger(scanner, "Ingrese el ID del producto a eliminar: ");
+
+        Product product = searchProductById(products, id);
+
+        if (product == null) {
+            System.out.println("El producto no existe.");
+            return;
+        }
+
+        products.remove(product);
+        System.out.println("Producto eliminado correctamente.");
     }
 
     public static void listCategories(ArrayList<Category> categories) {
