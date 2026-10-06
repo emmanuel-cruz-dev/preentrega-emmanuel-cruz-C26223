@@ -1,6 +1,9 @@
 package com.techlab.product;
 
 import com.techlab.product.model.Category;
+import com.techlab.product.model.Product;
+import com.techlab.product.model.ProductFood;
+import com.techlab.product.model.ProductPet;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,6 +12,7 @@ public class App {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        ArrayList<Product> products = new ArrayList<>();
         ArrayList<Category> categories = new ArrayList<>();
         loadCategories(categories);
 
@@ -31,7 +35,7 @@ public class App {
 
             switch (option) {
                 case 1:
-                    System.out.println("Opción 1: Agregar producto.");
+                    addProduct(scanner, products, categories);
                     break;
                 case 2:
                     System.out.println("Opción 2: Listar productos.");
@@ -62,9 +66,55 @@ public class App {
 
     public static void loadCategories(ArrayList<Category> categories) {
         categories.add(new Category("Alimentos", "Productos y bebidas para el consumo diario"));
-        categories.add(new Category("Deportes", "Artículos y accesorios para actividades deportivas y recreativas"));
         categories.add(new Category("Mascotas", "Productos alimenticios para el cuidado de mascotas"));
+        categories.add(new Category("Deportes", "Artículos y accesorios para actividades deportivas y recreativas"));
         categories.add(new Category("Herramientas", "Herramientas y accesorios para trabajos de reparación y mantenimiento"));
+    }
+
+    public static void addProduct(
+            Scanner scanner,
+            ArrayList<Product> products,
+            ArrayList<Category> categories
+    ) {
+        System.out.println("\n--- INGRESAR PRODUCTO ---");
+        System.out.println("1 - Producto alimenticio");
+        System.out.println("2 - Producto para mascotas");
+        System.out.println("3 - Producto deportes");
+        System.out.println("4 - Producto Herramientas");
+
+        int type;
+        do {
+            type = readInteger(scanner, "Seleccione el tipo de producto: ");
+
+            if (type != 1 && type != 2 && type != 3 && type != 4) {
+                System.out.println("Error: debe elegir entre 1, 2, 3 o 4.");
+            }
+
+        } while (type != 1 && type != 2 && type != 3 && type != 4);
+
+        String name = readTextNonEmpty(scanner, "Ingrese el nombre del producto: ");
+        double price = readDoubleNonNegative(scanner, "Ingrese el precio del producto: ");
+
+        listCategories(categories);
+        Category category = selectExistingCategory(scanner, categories);
+
+        Product product = switch (type) {
+            case 1 -> {
+                double weightKg = readDoubleNonNegative(scanner, "Ingrese el peso del producto: ");
+                yield new ProductFood(name, price, category, weightKg);
+            }
+            case 2 -> {
+                String flavor = readTextNonEmpty(scanner, "Ingrese el sabor: ");
+                yield new ProductPet(name, price, category, flavor);
+            }
+            default -> throw new IllegalStateException("Tipo inválido: " + type);
+        };
+
+        products.add(product);
+
+        System.out.println("Producto ingresado correctamente.");
+        System.out.println("Resumen del objeto creado:");
+        System.out.println(product);
     }
 
     public static void listCategories(ArrayList<Category> categories) {
