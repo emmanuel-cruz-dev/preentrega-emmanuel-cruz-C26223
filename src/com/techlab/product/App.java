@@ -35,7 +35,7 @@ public class App {
                     addProduct(scanner, products, categories);
                     break;
                 case 2:
-                    System.out.println("Opción 2: Listar productos.");
+                    productsList(products);
                     break;
                 case 3:
                     System.out.println("Opción 3: Buscar producto.");
@@ -120,6 +120,19 @@ public class App {
         System.out.println("Producto ingresado correctamente.");
         System.out.println("Resumen del objeto creado:");
         System.out.println(product);
+    }
+
+    public static void productsList(ArrayList<Product> products) {
+        System.out.println("\n--- LISTADO DE PRODUCTOS ---");
+
+        if (products.isEmpty()) {
+            System.out.println("No hay productos cargados.");
+            return;
+        }
+
+        for (Product product : products) {
+            System.out.println(product);
+        }
     }
 
     public static void listCategories(ArrayList<Category> categories) {
