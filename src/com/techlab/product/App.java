@@ -47,7 +47,7 @@ public class App {
                     deleteProduct(scanner, products);
                     break;
                 case 6:
-                    System.out.println("Opción 6: Listar categorías.");
+                    categoriesList(categories);
                     break;
                 case 0:
                     System.out.println("\nSaliendo del sistema. ¡Hasta luego!");
@@ -92,7 +92,7 @@ public class App {
         String name = readTextNonEmpty(scanner, "Ingrese el nombre del producto: ");
         double price = readDoubleNonNegative(scanner, "Ingrese el precio del producto: ");
 
-        listCategories(categories);
+        categoriesList(categories);
         Category category = selectExistingCategory(scanner, categories);
 
         Product product = switch (type) {
@@ -177,7 +177,7 @@ public class App {
         System.out.println("Producto eliminado correctamente.");
     }
 
-    public static void listCategories(ArrayList<Category> categories) {
+    public static void categoriesList(ArrayList<Category> categories) {
         System.out.println("\n--- CATEGORÍAS DISPONIBLES ---");
 
         for (Category category : categories) {
