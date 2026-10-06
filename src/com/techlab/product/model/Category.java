@@ -32,4 +32,14 @@ public class Category {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "| %-4d | %-20s | %-35s |",
+                id,
+                name,
+                description
+        );
+    }
 }
