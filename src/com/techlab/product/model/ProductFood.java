@@ -24,6 +24,6 @@ public class ProductFood extends Product {
 
     @Override
     public String getDetails() {
-        return "Peso:" + weightKg;
+        return "Peso:" + weightKg + "kg";
     }
 }
