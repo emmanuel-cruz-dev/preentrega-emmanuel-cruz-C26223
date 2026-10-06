@@ -38,7 +38,7 @@ public class App {
                     productsList(products);
                     break;
                 case 3:
-                    System.out.println("Opción 3: Buscar producto.");
+                    searchProduct(scanner, products);
                     break;
                 case 4:
                     System.out.println("Opción 4: Modificar producto.");
@@ -135,6 +135,27 @@ public class App {
         }
     }
 
+    public static void searchProduct(Scanner scanner, ArrayList<Product> products) {
+        System.out.println("\n--- CONSULTAR PRODUCTO ---");
+
+        if (products.isEmpty()) {
+            System.out.println("No hay productos cargados.");
+            return;
+        }
+
+        int id = readInteger(scanner, "Ingrese el ID del producto: ");
+
+        Product product = searchProductById(products, id);
+
+        if (product == null) {
+            System.out.println("El producto no existe.");
+            return;
+        }
+
+        System.out.println("Producto encontrado:");
+        System.out.println(product);
+    }
+
     public static void listCategories(ArrayList<Category> categories) {
         System.out.println("\n--- CATEGORÍAS DISPONIBLES ---");
 
@@ -155,6 +176,15 @@ public class App {
 
             System.out.println("Error: la categoría no existe.");
         }
+    }
+
+    public static Product searchProductById(ArrayList<Product> products, int id) {
+        for (Product product : products) {
+            if (product.getId() == id) {
+                return product;
+            }
+        }
+        return null;
     }
 
     public static Category searchCategoryById(ArrayList<Category> categories, int id) {
