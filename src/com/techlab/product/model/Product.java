@@ -42,4 +42,8 @@ public abstract class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
+
+    public abstract String getType();
+
+    public abstract String getDetails();
 }
