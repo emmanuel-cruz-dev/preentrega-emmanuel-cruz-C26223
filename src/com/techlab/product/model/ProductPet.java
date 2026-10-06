@@ -11,7 +11,7 @@ public class ProductPet extends Product{
 
     @Override
     public String getType() {
-        return "Mascota";
+        return "Mascotas";
     }
 
     public String getFlavor() {
