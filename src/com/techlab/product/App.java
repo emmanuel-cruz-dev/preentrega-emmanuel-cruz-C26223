@@ -41,7 +41,7 @@ public class App {
                     searchProduct(scanner, products);
                     break;
                 case 4:
-                    System.out.println("Opción 4: Modificar producto.");
+                    updateProduct(scanner, products, categories);
                     break;
                 case 5:
                     deleteProduct(scanner, products);
@@ -117,8 +117,7 @@ public class App {
 
         products.add(product);
 
-        System.out.println("Producto ingresado correctamente.");
-        System.out.println("Resumen del objeto creado:");
+        System.out.println("Producto ingresado correctamente. Resumen:");
         System.out.println(product);
     }
 
@@ -154,6 +153,60 @@ public class App {
 
         System.out.println("Producto encontrado:");
         System.out.println(product);
+    }
+
+    public static void updateProduct(
+            Scanner scanner,
+            ArrayList<Product> products,
+            ArrayList<Category> categories
+    ) {
+        System.out.println("\n--- MODIFICAR PRODUCTO ---");
+
+        if (products.isEmpty()) {
+            System.out.println("No hay productos cargados.");
+            return;
+        }
+
+        int id = readInteger(scanner, "Ingrese el ID del producto a modificar: ");
+
+        Product product = searchProductById(products, id);
+
+        if (product == null) {
+            System.out.println("El producto no existe.");
+            return;
+        }
+
+        String newName = readTextNonEmpty(scanner, "Ingrese el nuevo nombre del producto: ");
+        double newPrice = readDoubleNonNegative(scanner, "Ingrese el nuevo precio del producto: ");
+
+        categoriesList(categories);
+        Category newCategory = selectExistingCategory(scanner, categories);
+
+        product.setName(newName);
+        product.setPrice(newPrice);
+        product.setCategory(newCategory);
+
+        if (product instanceof ProductFood food) {
+            double newWeightKg = readDoubleNonNegative(scanner, "Ingrese el nuevo peso: ");
+            food.setWeightKg(newWeightKg);
+        }
+
+        if (product instanceof ProductPet pet) {
+            String newFlavor = readTextNonEmpty(scanner, "Ingrese el nuevo sabor: ");
+            pet.setFlavor(newFlavor);
+        }
+
+        if (product instanceof ProductSport sport) {
+            String newSport = readTextNonEmpty(scanner, "Ingrese el nuevo deporte: ");
+            sport.setSport(newSport);
+        }
+
+        if (product instanceof ProductTool tool) {
+            int newWarrantyMonths = readInteger(scanner, "Ingrese los nuevos meses de garantía: ");
+            tool.setWarrantyMonths(newWarrantyMonths);
+        }
+
+        System.out.println("Producto modificado correctamente.");
     }
 
     public static void deleteProduct(Scanner scanner, ArrayList<Product> products) {
