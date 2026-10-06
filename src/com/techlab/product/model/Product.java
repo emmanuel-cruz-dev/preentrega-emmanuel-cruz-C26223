@@ -46,4 +46,16 @@ public abstract class Product {
     public abstract String getType();
 
     public abstract String getDetails();
+
+    @Override
+    public String toString() {
+        return String.format(
+                "| %-4d | %-20s | $%-8.2f | %-12s | %-25s |",
+                id,
+                name,
+                price,
+                getType(),
+                getDetails()
+        );
+    }
 }
