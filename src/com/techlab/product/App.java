@@ -1,9 +1,6 @@
 package com.techlab.product;
 
-import com.techlab.product.model.Category;
-import com.techlab.product.model.Product;
-import com.techlab.product.model.ProductFood;
-import com.techlab.product.model.ProductPet;
+import com.techlab.product.model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -106,6 +103,14 @@ public class App {
             case 2 -> {
                 String flavor = readTextNonEmpty(scanner, "Ingrese el sabor: ");
                 yield new ProductPet(name, price, category, flavor);
+            }
+            case 3 -> {
+                String sport = readTextNonEmpty(scanner, "Ingrese el deporte: ");
+                yield new ProductSport(name, price, category, sport);
+            }
+            case 4 -> {
+                int warrantyMonths = readInteger(scanner, "Ingrese los meses de garantía: ");
+                yield new ProductTool(name, price, category, warrantyMonths);
             }
             default -> throw new IllegalStateException("Tipo inválido: " + type);
         };
